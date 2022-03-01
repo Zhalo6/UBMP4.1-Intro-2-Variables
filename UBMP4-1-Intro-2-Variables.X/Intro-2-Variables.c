@@ -2,7 +2,7 @@
  Project: Intro-2-Variables
  Date:    March 1, 2022
  
-This example program demonstrates the use of byte (char) constants and
+ This example program demonstrates the use of byte (char) constants and
  variables to count button presses and trigger actions when a limit is reached.
   
  Additional program analysis and programming activities demonstrate using bit
@@ -75,8 +75,8 @@ int main(void)
  * 
  * 1. The 'SW2Count' variable is created within RAM as an 8-bit memory location
  *    by the declaration: 'unsigned char SW2Count = 0;'
- *    What is the the maximum value an 8-bit variable can store?
- *    What are some benefits and drawbacks of using 8-bit variables in an 8-bit
+ *    What is the the maximum value an 8-bit variable can store? What are some
+ *    of the benefits and drawbacks of using 8-bit variables in an 8-bit
  *    microcontroller?
  * 
  * 2. The constant 'maxCount' is defined using a declaration similar to that
@@ -126,10 +126,10 @@ int main(void)
  *    operation of LED D4 when SW2 is held?
  *
  * 6. The fundamental problem with this program is that pushbutton SW2 is sensed
- *    in each cycle of the loop and if its state is read as pressed, another
- *    count is added to the SW2Count variable. Rather than responding to state,
- *    the program needs to be made to respond only to each new press -- in other
- *    words, a *change* of SW2 state, from not-pressed to pressed. Doing this
+ *    in each cycle of the loop, and if its state is read as pressed, another
+ *    count is added to the SW2Count variable. The program needs to be made to
+ *    respond only to each new press, rather than just switch state -- in other
+ *    words, to a *change* of SW2 state, from not-pressed to pressed. Doing this
  *    requires the use of another variable to store the prior state of SW2, so
  *    that its current state can be evaluated as being the same, or different
  *    from its state in the previous loop. Replace the initial if-else condition 
