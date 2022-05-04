@@ -222,12 +222,99 @@ int main(void)
  *    by clearing the count and turning off the LEDs if either SW3 or SW4 is
  *    pressed.
  *
+const unsigned char maxCount = 25;
+unsigned char SW2Count = 0;
+bool SW2Pressed = false;
+unsigned char SW5Count = 0;
+bool SW5Pressed = false;
+unsigned char Win1 = 0;
+unsigned char Win2 = 0;
+
+   if(SW2 == pressed && SW2Pressed == false && Win2 == 0)
+       {
+           LED3 = 1;
+           if(SW2Count < 255)
+           {
+               SW2Count = SW2Count + 1;
+           }
+           SW2Pressed = true;
+       }
+    if(SW2 == notPressed)
+       {
+           LED3 = 0;
+           SW2Pressed = false;
+       }
+    if(SW2Count >= maxCount)
+       {
+           LED4 = 1;
+           Win1 = 1;
+       }
+       else
+       {
+           LED4 = 0;
+       }
+    if(SW5 == pressed && SW5Pressed == false && Win1 == 0)
+       {
+           LED6 = 1;
+           if(SW5Count < 255)
+           {
+               SW5Count = SW5Count + 1;
+           }
+           SW5Pressed = true;
+       }
+ 
+     if(SW5 == notPressed)
+       {
+           LED6 = 0;
+           SW5Pressed = false;
+       }
+   if(SW5Count >= maxCount)
+       {
+           LED5 = 1;
+           Win2 = 1;
+       }
+       else
+       {
+           LED5 = 0;
+       }
+   if(SW3 == pressed||SW4 == pressed)
+       {
+           LED4 = 0;
+           LED5 = 0;
+           SW2Count = 0; SW5Count = 0;
+           Win1 = 0;
+           Win2 = 0;
+       }
+
 
  * 2. Use your knowledge of Boolean variables and logical conditions to simulate
  *    a toggle button. Each new press of the toggle button will 'toggle' an LED
  *    to its opposite state. (Toggle buttons are commonly used as push-on, 
  *    push-off power buttons in digital devices.)
  * 
+bool Prepressed = 0;
+bool Toggle = 0;
+ if(SW2 == 0 && Prepressed == false && Toggle == 0)
+   {
+       LED3 = 1;
+       Toggle = 1;
+   }
+   if(SW2 == 1 && Prepressed == false && Toggle == 1)
+   {
+       Prepressed = true;
+       Toggle = 0;
+   }
+   if(SW2 == 0 && Prepressed == true && Toggle == 0)
+   {
+       LED3 = 0;
+       Toggle = 1;
+   }
+   if(SW2 == 1 && Prepressed == true && Toggle == 1)
+   {
+       Prepressed = false;
+       Toggle = 0;
+   }
+
  * 3. A multi-function button can be used to enable one action when pressed, and
  *    a second or alternate action when held. A variable that counts loop cycles
  *    can be used to determine how long a button is held (just as the first
@@ -235,6 +322,24 @@ int main(void)
  *    multifunction button that lights one LED when a button is pressed, and
  *    lights a second LED after the button is held for more that one second.
  * 
+   unsigned char LoopCycle = 0;
+   const unsigned char F2 = 100;
+       if(SW2 == pressed)
+       {
+           LED3 = 1;
+           LoopCycle ++;
+       }
+       if(LoopCycle >= F2)
+       {
+           LED4 = 1;
+       }
+       if(SW3 == pressed)
+       {
+           LED3 = 0;
+           LED4 = 0;
+           LoopCycle = 0;
+       }
+
  * 4. Do your pushbuttons bounce? Switch bounce is the term that describes
  *    switch contacts repeatedly closing and opening before settling in their
  *    final (usually closed) state. Switch bounce in a room's light switch is
@@ -245,9 +350,42 @@ int main(void)
  *    to reset the count and turn off the LEDs so that the test can be repeated.
  *    To determine if your switches bounce, try pressing them at various speeds
  *    and using different amounts of force.
- * 
+ *
+unsigned char SW2BounceCounter = 0;
+unsigned char Held = 0;
+     if(SW2 == pressed && Held == 0)
+   {
+       SW2BounceCounter ++;
+       Held = 1;
+   }
+   if(SW2 == 1)
+   {
+       Held = 0;
+   }
+     if(SW2BounceCounter == 4)
+     {LED3 = 1;}
+     if(SW2BounceCounter == 5)
+     {LED4 = 1;}
+     if(SW2BounceCounter == 6)
+     {LED5 = 1;}
+      if(SW2BounceCounter == 7)
+     {LED6 = 1;}
+     if(SW3 == pressed)
+     {
+         LED3 = 0;
+         LED4 = 0;
+         LED5 = 0;
+         LED6 = 0;
+         SW2BounceCounter = 0;
+     }
+
  * 5. Did your pushbuttons bounce? Can you think of a technique similar to the
  *    multi-function button that could be implemented to make your program
  *    ignore switch bounces. Multiple switch activations within a 50ms time span
  *    might indicate switch bounce and can be safely ignored.
+
+  Yes, my pushbuttons did bounce. A way to check for switch bounce is a "checker".
+*  When a a button is pressed a loopcycle will activate for 50ms. During this time all inputs from the button are ignored.
+*  After the alotted time it will run the intended command.
+
  */
